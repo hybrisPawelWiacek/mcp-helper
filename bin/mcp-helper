@@ -1,80 +1,19 @@
 #!/usr/bin/env node
 /**
  * MCP Helper CLI wrapper
- * This script routes commands to the appropriate slash command handlers
+ * Standalone CLI tool for managing MCP server configurations
  */
 
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-import { spawn } from 'child_process';
+import { runCommand } from '../cli/router.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-// Parse command line arguments
 const args = process.argv.slice(2);
 const command = args[0];
-const subcommand = args[1];
-
-// Map commands to slash command files
-const commandMap = {
-  'init': 'mcp-helper-init.js',
-  'add': 'mcp-helper-add.js',
-  'list': 'mcp-helper-list.js',
-  'reconfigure': 'mcp-helper-reconfigure.js',
-  'help': null
-};
-
-// Show help if no command or help requested
-if (!command || command === 'help' || command === '--help' || command === '-h') {
-  console.log(`
-MCP Helper - Manage MCP servers for Claude Code CLI
-
-Usage: mcp-helper <command> [options]
-
-Commands:
-  init                    Initialize MCP Helper in current project
-  add [server]           Add a new MCP server configuration
-  list                   List configured MCP servers
-  reconfigure [server]   Modify existing server configuration
-  help                   Show this help message
-
-Examples:
-  mcp-helper init
-  mcp-helper add github-official
-  mcp-helper list
-  mcp-helper reconfigure postgres
-
-For more information, visit: https://github.com/mcp-helper/mcp-helper
-`);
-  process.exit(0);
-}
-
-// Check if command exists
-if (!commandMap.hasOwnProperty(command)) {
-  console.error(`Unknown command: ${command}`);
-  console.error('Run "mcp-helper help" for available commands');
-  process.exit(1);
-}
-
-// Execute the corresponding slash command
-const commandFile = commandMap[command];
-const commandPath = join(__dirname, '..', 'slash-commands', commandFile);
-
-// Pass remaining arguments to the command
 const commandArgs = args.slice(1);
 
-// Spawn the command as a child process
-const child = spawn('node', [commandPath, ...commandArgs], {
-  stdio: 'inherit',
-  env: process.env
-});
-
-child.on('error', (error) => {
-  console.error(`Failed to execute command: ${error.message}`);
+runCommand(command, commandArgs).catch(error => {
+  console.error('\x1b[31m✗\x1b[0m Fatal error:', error.message);
+  if (process.env.DEBUG) {
+    console.error(error.stack);
+  }
   process.exit(1);
-});
-
-child.on('exit', (code) => {
-  process.exit(code || 0);
 });

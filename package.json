@@ -9,7 +9,8 @@
   "type": "module",
   "scripts": {
     "test": "node test/e2e/test-runner.js",
-    "test:quick": "node slash-commands/index.js help",
+    "test:quick": "node cli/index.js help",
+    "cli": "node cli/index.js",
     "lint": "eslint .",
     "format": "prettier --write .",
     "postinstall": "node postinstall.js",

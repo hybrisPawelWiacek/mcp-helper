@@ -48,7 +48,7 @@ class TestRunner {
 
   async runCommand(command, args = []) {
     return new Promise((resolve) => {
-      const cmdPath = path.join(projectRoot, 'slash-commands', 'index.js');
+      const cmdPath = path.join(projectRoot, 'cli', 'index.js');
       const proc = spawn('node', [cmdPath, command, ...args], {
         cwd: this.tempDir,
         env: { ...process.env, DEBUG: 'false' }

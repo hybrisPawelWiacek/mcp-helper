@@ -5,26 +5,31 @@ Generated: 2025-08-10
 ## Overview
 This plan outlines the completion of mcp-helper as a deployable NPM package with full server card coverage for all 17-18 standard MCP servers.
 
-## Current Status (Updated 2025-01-10 END OF SESSION)
+## Current Status (Updated 2025-01-10 - CLI/Slash Command Restructuring)
 
 ### ✅ COMPLETED
-- **Slash Commands**: All 4 implemented (init, add, list, reconfigure)
+- **CLI Commands**: All 5 implemented as standalone CLI (init, add, list, reconfigure, add-custom)
+- **Custom Server Support**: 90% complete - `/mcp-helper add-custom` command functional
+- **CLI Restructuring**: Refactored from slash-commands to proper CLI architecture
+  - BaseCommand class with shared functionality
+  - CommandRouter for unified dispatching
+  - E2E test suite with 8 tests
 - **Server Cards**: 13 of 18 complete (72%)
   - Original 8: perplexity-ask, brave-search, context7, serena, github-official, firecrawl, memory, sequentialthinking
   - New (5 of 10): postgres, slack, openmemory, atlassian, notion
 - **NPM Package Structure**: Ready but not published
 
-### 🚨 CRITICAL GAP - Custom Server Support (0%)
-- **This was the 3rd original requirement!**
-- **Plan Created**: See `CUSTOM_SERVER_PLAN.md`
-- **Foundation Servers**: serena, sequentialthinking, context7 (required)
-- **Next Todo**: #17 - Update minimum_servers.json
+### 🏗️ ARCHITECTURE CLARIFICATION
+- **CLI Tool** (✅ Implemented): Standalone command-line tool in `cli/` directory
+- **Slash Commands** (🚧 Planned): Future Claude Code integration in `slash-commands/` directory
+- **Decision**: Maintaining both approaches per user request ("both for now")
 
 ### 📋 TODO Next Session
-1. **Start with Todo #17**: Update minimum_servers.json
-2. **Follow CUSTOM_SERVER_PLAN.md**: 5-day implementation
-3. **Then continue server cards**: puppeteer, playwright, etc.
-4. **Finally publish NPM**: After custom support works
+1. **Research Claude Code Extension API**: Understand how to create true slash commands
+2. **Implement slash-commands**: Create Claude Code native integration
+3. **Complete remaining server cards**: puppeteer, playwright, docker-mcp, claude-code, linkedin-mcp-server
+4. **Test custom server flow**: Validate minimum_servers.json with real custom servers
+5. **Publish NPM package**: After slash command integration
 
 ## Phase 1: Minimum Server Set Definition (NEEDS UPDATE)
 
