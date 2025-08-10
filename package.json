@@ -1,0 +1,52 @@
+{
+  "name": "@mcp/helper",
+  "version": "1.0.0",
+  "description": "Slash command extension for Claude Code CLI to manage MCP servers",
+  "main": "index.js",
+  "bin": {
+    "mcp-helper": "./bin/mcp-helper"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "postinstall": "node postinstall.js",
+    "prepublishOnly": "npm test && npm run lint"
+  },
+  "keywords": [
+    "mcp",
+    "claude",
+    "claude-code",
+    "slash-commands",
+    "model-context-protocol"
+  ],
+  "author": "MCP Helper Contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mcp-helper/mcp-helper.git"
+  },
+  "homepage": "https://github.com/mcp-helper/mcp-helper#readme",
+  "bugs": {
+    "url": "https://github.com/mcp-helper/mcp-helper/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "js-yaml": "^4.1.0",
+    "handlebars": "^4.7.8",
+    "chalk": "^5.3.0",
+    "inquirer": "^9.2.12",
+    "dotenv": "^16.3.1",
+    "ajv": "^8.12.0",
+    "cli-table3": "^0.6.3",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

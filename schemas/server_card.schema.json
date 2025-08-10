@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ServerCard",
+  "type": "object",
+  "required": [
+    "id", "name", "status", "transports", "runtime", "deploy", "envSchema", "healthCheck", "docs", "useCases"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "name": { "type": "string" },
+    "status": { "type": "string", "enum": ["active", "deprecated", "not-recommended"] },
+    "transports": { "type": "array", "items": { "type": "string", "enum": ["http", "sse", "stdio"] } },
+    "runtime": { "type": "string", "enum": ["node", "python", "docker", "other"] },
+    "deploy": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": { "type": "string", "enum": ["docker", "npx", "native"] },
+        "image": { "type": "string" },
+        "command": { "type": "string" },
+        "args": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "envSchema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "description"],
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "required": { "type": "boolean", "default": false },
+          "example": { "type": "string" }
+        }
+      }
+    },
+    "ports": { "type": "array", "items": { "type": "integer" } },
+    "healthCheck": {
+      "type": "object",
+      "properties": {
+        "http": { "type": "string" },
+        "command": { "type": "string" }
+      }
+    },
+    "docs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "url"],
+        "properties": {
+          "title": { "type": "string" },
+          "url": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "useCases": {
+      "type": "object",
+      "properties": {
+        "generic": { "type": "array", "items": { "type": "string" } },
+        "project": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "prosCons": {
+      "type": "object",
+      "properties": {
+        "pros": { "type": "array", "items": { "type": "string" } },
+        "cons": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}
